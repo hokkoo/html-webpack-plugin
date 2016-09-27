@@ -93,7 +93,7 @@ HtmlWebpackPlugin.prototype.apply = function (compiler) {
         if (self.options.favicon) {
           return self.addFileToAssets(self.options.favicon, compilation)
             .then(function (faviconBasename) {
-              var publicPath = compilation.mainTemplate.getPublicPath({hash: compilation.hash}) || '';
+              var publicPath = this.options.publicPath || compilation.mainTemplate.getPublicPath({hash: compilation.hash}) || '';
               if (publicPath && publicPath.substr(-1) !== '/') {
                 publicPath += '/';
               }
@@ -378,12 +378,12 @@ HtmlWebpackPlugin.prototype.htmlWebpackPluginAssets = function (compilation, chu
   var webpackStatsJson = compilation.getStats().toJson();
 
   // Use the configured public path or build a relative path
-  var publicPath = typeof compilation.options.output.publicPath !== 'undefined'
+  var publicPath = this.options.publicPath || (typeof compilation.options.output.publicPath !== 'undefined'
     // If a hard coded public path exists use it
     ? compilation.mainTemplate.getPublicPath({hash: webpackStatsJson.hash})
     // If no public path was set get a relative url path
     : path.relative(path.resolve(compilation.options.output.path, path.dirname(self.childCompilationOutputName)), compilation.options.output.path)
-      .split(path.sep).join('/');
+      .split(path.sep).join('/'));
 
   if (publicPath.length && publicPath.substr(-1, 1) !== '/') {
     publicPath += '/';

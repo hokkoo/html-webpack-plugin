@@ -39,7 +39,7 @@ HtmlWebpackPlugin.prototype.apply = function (compiler) {
   // generate it at correct location
   var filename = this.options.filename;
   if (path.resolve(filename) === path.normalize(filename)) {
-    this.options.filename = path.relative(compiler.options.output.path, filename);
+    this.options.filename = path.relative(this.options.outputPath || compiler.options.output.path, filename);
   }
 
   compiler.plugin('make', function (compilation, callback) {
@@ -382,7 +382,7 @@ HtmlWebpackPlugin.prototype.htmlWebpackPluginAssets = function (compilation, chu
     // If a hard coded public path exists use it
     ? compilation.mainTemplate.getPublicPath({hash: webpackStatsJson.hash})
     // If no public path was set get a relative url path
-    : path.relative(path.resolve(compilation.options.output.path, path.dirname(self.childCompilationOutputName)), compilation.options.output.path)
+    : path.relative(path.resolve(this.options.outputPath || compilation.options.output.path, path.dirname(self.childCompilationOutputName)), this.options.outputPath || compilation.options.output.path)
       .split(path.sep).join('/'));
 
   if (publicPath.length && publicPath.substr(-1, 1) !== '/') {

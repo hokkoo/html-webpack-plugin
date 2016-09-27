@@ -1,5 +1,5 @@
 {
-  "name": "html-webpack-plugin",
+  "name": "html-webpack-plugin-hokkoo",
   "version": "2.23.0",
   "description": "Simplifies creation of HTML files to serve your webpack bundles",
   "main": "index.js",
@@ -9,10 +9,7 @@
     "lib/"
   ],
   "scripts": {
-    "prepublish": "npm run test",
-    "pretest": "semistandard",
-    "build-examples": "node examples/build-examples.js",
-    "test": "jasmine"
+    "build-examples": "node examples/build-examples.js"
   },
   "repository": {
     "type": "git",
